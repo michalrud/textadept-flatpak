@@ -3,9 +3,9 @@
     "runtime": "org.freedesktop.Platform",
     "runtime-version": "18.08",
     "sdk": "org.freedesktop.Sdk",
-    "command": "textadept",
+    "command": "/app/usr/local/share/textadept",
     "separate-locales": false,
-    "cleanup": ["textadept_10.3.x86_64/"],
+    "cleanup": ["src/"],
     "finish-args": [
         "--socket=x11",
         "--filesystem=home"
@@ -16,26 +16,65 @@
             "name": "textadept",
             "buildsystem": "simple",
             "build-commands": [
-                "ls",
-                "cp -r textadept_10.3.x86_64/* /app/bin/",
-                "mkdir -p /app/share/icons/hicolor/16x16/apps/ && cp textadept_10.3.x86_64/core/images/ta_16x16.png /app/share/icons/hicolor/16x16/apps/com.foicica.textadept.png",
-                "mkdir -p /app/share/icons/hicolor/32x32/apps/ && cp textadept_10.3.x86_64/core/images/ta_32x32.png /app/share/icons/hicolor/32x32/apps/com.foicica.textadept.png",
-                "mkdir -p /app/share/icons/hicolor/48x48/apps/ && cp textadept_10.3.x86_64/core/images/ta_48x48.png /app/share/icons/hicolor/48x48/apps/com.foicica.textadept.png",
-                "mkdir -p /app/share/icons/hicolor/64x64/apps/ && cp textadept_10.3.x86_64/core/images/ta_64x64.png /app/share/icons/hicolor/64x64/apps/com.foicica.textadept.png",
-                "mkdir -p /app/share/icons/hicolor/128x128/apps/ && cp textadept_10.3.x86_64/core/images/ta_128x128.png /app/share/icons/hicolor/128x128/apps/com.foicica.textadept.png",
-                "mkdir -p /app/share/icons/hicolor/256x256/apps/ && cp textadept_10.3.x86_64/core/images/ta_256x256.png /app/share/icons/hicolor/256x256/apps/com.foicica.textadept.png",
-                "mkdir -p /app/share/applications/ && cp textadept_10.3.x86_64/src/textadept.desktop /app/share/applications/com.foicica.textadept.desktop",
-                "cp textadept_10.3.x86_64/src/textadept-curses.desktop /app/share/applications/com.foicica.textadept-curses.desktop",
-                "sed -i 's|Icon=.*|Icon=com.foicica.textadept|' /app/share/applications/com.foicica.textadept.desktop",
+                "cd src/src && make deps && make verify-deps && make -j && make install DESTDIR=/app",
                 "install -Dm644 com.foicica.textadept.appdata.xml /app/share/metainfo/com.foicica.textadept.appdata.xml"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "only-arches": ["x86_64"],
-                    "strip-components": 0,
-                    "url": "https://foicica.com/textadept/download/textadept_LATEST.x86_64.tgz",
-                    "sha256": "df67b9d1210414e5cbd6d0de22b0714470c6a3d96416161beaa7d149ddd2c5fa"
+                    "dest": "src/",
+                    "strip-components": "0",
+                    "url": "https://foicica.com/hg/textadept/archive/e7c3dfab62a7.zip",
+                    "sha256": "9304313fbd9b5a51f290ff386f3b7f68860d45e49ad2550d66e57599565de017"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "sha256": "fbd8e5cef5fe6cb4f214c1c1cb75057fefe777bb6fff6f5685f6e8ea42d9bcd4",
+                    "url": "https://foicica.com/hg/scintilla/archive/8b888bf05fe3.zip"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "sha256": "0c2eed3f960446e1a3e4b9a1ca2f3ff893b6ce41942cf54d5dd59ab4b3b058ac",
+                    "url": "https://www.lua.org/ftp/lua-5.3.5.tar.gz"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "sha256": "10190ae758a22a16415429a9eb70344cf29cbda738a6962a9f94a732340abf8e",
+                    "url": "http://www.inf.puc-rio.br/~roberto/lpeg/lpeg-1.0.0.tar.gz"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "sha256": "9e40e3807cb1a80d96697f35bdc9754548b9a12ecc5a412259398a1a8b089a10",
+                    "url": "https://github.com/keplerproject/luafilesystem/archive/v_1_6_3.zip"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "sha256": "d587a76b3b69e0305e7eb47b7b5e324f42ac7dbeb174b3f4640c0f177542b6ef",
+                    "url": "https://foicica.com/hg/gtdialog/archive/6435a42450c7.zip"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "sha256": "028da75d5f777a1c4184f88e34918bd273bd83bbe3c959bc11710c4f0ea2e448",
+                    "url": "https://invisible-mirror.net/archives/cdk/cdk-5.0-20150928.tgz"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "sha256": "6c0d87c94ab9915e76ecd313baec08dedf3bd56de83743d9aa923a081935d2f5",
+                    "url": "http://www.leonerd.org.uk/code/libtermkey/libtermkey-0.20.tar.gz"
+                },
+                {
+                    "type": "file",
+                    "dest": "src/src",
+                    "dest-filename": "bombay.zip",
+                    "sha256": "74e503c0040d13c806a42a940697b1bc23beab9c7b18ff6f208def12bdaef5a3",
+                    "url": "https://foicica.com/hg/bombay/archive/3852895f5313.zip"
                 },
                 {
                     "type": "file",
